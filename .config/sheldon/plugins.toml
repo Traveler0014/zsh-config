@@ -1,0 +1,31 @@
+# Sheldon 配置文件示例
+# 逻辑结构：基础补全 -> 路径增强 -> 历史建议 -> 语法高亮（必须最后）
+
+shell = "zsh"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+apply = ["source"]
+
+[plugins.zoxide]
+# github = "ajeetdsouza/zoxide"
+# 逻辑说明：zoxide 需要运行初始化命令，通过 inline 模板注入执行逻辑
+inline = 'eval "$(zoxide init zsh)"'
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["source"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+# 逻辑说明：语法高亮插件必须在所有 Widget 注册之后加载，
+# 否则它无法捕获其他插件对光标行为的修改。
+apply = ["source"]
+
+# 针对某些需要特定配置的插件，可以单独定义内联逻辑
+[plugins.compinit]
+inline = """
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+"""
