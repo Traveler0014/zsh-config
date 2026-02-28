@@ -7,7 +7,7 @@ SAVEHIST=4000
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/travon/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
 # 遵循 XDG 标准定义路径
 export XDG_CONFIG_HOME="$HOME/.config"
