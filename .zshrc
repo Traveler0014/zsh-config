@@ -50,3 +50,8 @@ fi
 
 # 最终加载
 source "$SHELDON_STATIC"
+
+# 代理快速启停（proxy_on / proxy_off / proxy_toggle / proxy_status），移除下面一行即禁用
+[[ -f "$XDG_CONFIG_HOME/zsh/proxy.zsh" ]] && source "$XDG_CONFIG_HOME/zsh/proxy.zsh"
+
+. "$HOME/.local/share/../bin/env"
