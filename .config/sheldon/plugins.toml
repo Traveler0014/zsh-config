@@ -12,8 +12,9 @@ github = "zsh-users/zsh-completions"
 apply = ["source"]
 
 # ---- 2. 智能跳转 ----
+# 存在性守卫：zoxide 未安装时静默跳过（可移植性）
 [plugins.zoxide]
-inline = 'eval "$(zoxide init zsh)"'
+inline = 'command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"'
 
 # ---- 3. 自动建议 ----
 [plugins.zsh-autosuggestions]
