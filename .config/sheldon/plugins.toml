@@ -1,29 +1,35 @@
-# Sheldon 配置文件示例
-# 逻辑结构：基础补全 -> 路径增强 -> 历史建议 -> 语法高亮（必须最后）
+# Sheldon 插件配置
+# 加载顺序：completions → 路径工具 → 交互增强 → 语法高亮 → 主题（必须最后）
+#
+# 静态缓存：zshrc 中检测配置/锁文件变化后自动重新生成
+# 位置：$ZSH_CACHE_DIR/sheldon_static.zsh
 
 shell = "zsh"
 
+# ---- 1. 补全增强 ----
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 apply = ["source"]
 
+# ---- 2. 智能跳转 ----
 [plugins.zoxide]
-# github = "ajeetdsouza/zoxide"
-# 逻辑说明：zoxide 需要运行初始化命令，通过 inline 模板注入执行逻辑
 inline = 'eval "$(zoxide init zsh)"'
 
+# ---- 3. 自动建议 ----
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
-use = ["{{ name }}.zsh"]
 apply = ["source"]
 
+# ---- 4. 语法高亮（必须最后加载，以捕获所有 widget 变更） ----
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
-# 逻辑说明：语法高亮插件必须在所有 Widget 注册之后加载，
-# 否则它无法捕获其他插件对光标行为的修改。
 apply = ["source"]
 
-# 针对某些需要特定配置的插件，可以单独定义内联逻辑
+# ---- 5. 提示符主题 ----
+[plugins.starship]
+inline = 'eval "$(starship init zsh)"'
+
+# ---- 6. 补全初始化 ----
 [plugins.compinit]
 inline = """
 autoload -Uz compinit

@@ -1,0 +1,15 @@
+# ------------------------------------------------------------
+# 90-local.zsh —— 本机私有配置（不入库，见 .gitignore）
+# 安装：install.sh 会自动从 90-local.zsh.example 生成本文件
+# 手动迁移：复制本模板为 90-local.zsh 并按新机器填写
+# ------------------------------------------------------------
+
+# 本机代理（覆盖 proxy.zsh 的默认值；90 模块先于 proxy.zsh 加载）
+# export PROXY_URL="http://127.0.0.1:7890"
+# export PROXY_SOCKS_URL="socks5://127.0.0.1:7890"
+
+# Cloudflare
+# export CLOUDFLARE_ACCOUNT_ID="你的账号ID"
+# export CLOUDFLARE_GATEWAY_ID="你的网关ID"
+
+# 其它机器相关变量/别名写在这里……

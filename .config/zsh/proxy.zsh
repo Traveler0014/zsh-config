@@ -1,5 +1,8 @@
 # 代理快速启停脚本（可拔插：删除或不再 source 即禁用）
 # 用法：proxy_on | proxy_off | proxy_toggle | proxy_status
+#
+# 默认地址为中性值（Clash 标准端口）；本机实际代理请在
+# 90-local.zsh 中通过 PROXY_URL / PROXY_SOCKS_URL 覆盖（模块先于本文件加载）
 
 # 默认代理地址（可按需在 source 前覆盖）
 : "${PROXY_URL:=http://127.0.0.1:7890}"
