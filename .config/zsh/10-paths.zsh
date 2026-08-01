@@ -8,6 +8,7 @@ typeset -U path    # 去重，保证重复 source 幂等
 
 typeset -a _zsh_paths=(
   "$HOME/.local/bin"              # pipx / uv / 本地脚本
+  "$HOME/.local/share/fnm"        # fnm（官方安装脚本的二进制位置）
   "$HOME/.cargo/bin"              # Rust 工具链
   "$HOME/.bun/bin"                # Bun
   "$HOME/.local/go/bin"           # 本地 Go
