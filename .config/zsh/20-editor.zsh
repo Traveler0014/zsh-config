@@ -1,19 +1,17 @@
 # ------------------------------------------------------------
 # 20-editor.zsh —— 编辑器与键位
-# 显式启用 Emacs 风格键位（不再使用 vi 模式）
-# 注意：部分 zsh 构建（含本机 5.9）默认 main→viins，
-#       必须显式 bindkey -e 才能保证跨环境行为一致
 # ------------------------------------------------------------
 
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 alias vim=nvim
 
-# 显式启用 emacs 键位（覆盖编译默认值）
+# 显式启用 emacs 键位（部分 zsh 构建默认 viins，
+# 必须显式 bindkey -e 才能保证键位行为一致）
 bindkey -e
 
 # ---- 终端功能键（Home/End/Delete/PgUp/PgDn）----
-# zsh 默认键位表未绑定这些序列（均为 undefined-key），需显式绑定。
+# 目的：zsh 默认键位表未绑定这些序列（均为 undefined-key），需显式绑定。
 # 绑定多个变体以兼容不同终端/终端模式，未用到的序列不会产生副作用。
 bindkey '^[[H'  beginning-of-line        # Home（xterm/大多数现代终端）
 bindkey '^[[F'  end-of-line              # End

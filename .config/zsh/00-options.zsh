@@ -2,7 +2,7 @@
 # 00-options.zsh —— 基础选项与历史记录
 # ------------------------------------------------------------
 
-# ---- 历史记录（数据存放于 $XDG_DATA_HOME，随配置一起迁移） ----
+# ---- 历史记录（数据存放于 $XDG_DATA_HOME，随配置目录一起管理） ----
 export HISTFILE="$XDG_DATA_HOME/zsh/history"
 export HISTSIZE=10000
 export SAVEHIST=10000
@@ -16,7 +16,7 @@ setopt SHARE_HISTORY             # 多终端共享历史
 setopt INC_APPEND_HISTORY        # 实时追加历史（而非等退出）
 setopt HIST_FCNTL_LOCK           # 用 fcntl 锁历史文件（多终端更可靠）
 
-# ---- 缓存 / 数据目录 ----
+# ---- 缓存 / 数据目录（确保存在，供后续模块重定向写入） ----
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 export ZSH_DATA_DIR="$XDG_DATA_HOME/zsh"
 [[ ! -d "$ZSH_CACHE_DIR" ]] && mkdir -p "$ZSH_CACHE_DIR"

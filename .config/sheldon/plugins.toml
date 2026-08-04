@@ -1,38 +1,44 @@
 # Sheldon 插件配置
-# 加载顺序：completions → 路径工具 → 交互增强 → 语法高亮 → 主题（必须最后）
+# 新增插件：按下方 [plugins.<名称>] 格式追加条目
+#   github = 仓库地址 或 inline = 内联命令；apply = ["source"] 表示加载该插件
+# 加载顺序（决定了相互依赖关系，勿随意调整）：
+#   1. zsh-completions:   把 src/ 加入 fpath（必须在 compinit 之前）
+#   2. compinit:          扫描 fpath 生成补全（-C 跳过安全检查以加速）
+#   3. zoxide:            路径跳转（存在性守卫，未安装时跳过）
+#   4. autosuggestions:   注册 ZLE widget
+#   5. syntax-highlighting: 必须最后加载，以包裹前面所有 widget
+#   6. starship:          提示符（最后加载，注册 chpwd 钩子）
 #
-# 静态缓存：zshrc 中检测配置/锁文件变化后自动重新生成
+# 静态缓存：40-sheldon.zsh 检测配置/锁文件变化后自动重新生成
 # 位置：$ZSH_CACHE_DIR/sheldon_static.zsh
 
 shell = "zsh"
 
-# ---- 1. 补全增强 ----
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 apply = ["source"]
 
-# ---- 2. 智能跳转 ----
-# 存在性守卫：zoxide 未安装时静默跳过（可移植性）
-[plugins.zoxide]
-inline = 'command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"'
-
-# ---- 3. 自动建议 ----
-[plugins.zsh-autosuggestions]
-github = "zsh-users/zsh-autosuggestions"
-apply = ["source"]
-
-# ---- 4. 语法高亮（必须最后加载，以捕获所有 widget 变更） ----
-[plugins.zsh-syntax-highlighting]
-github = "zsh-users/zsh-syntax-highlighting"
-apply = ["source"]
-
-# ---- 5. 提示符主题 ----
-[plugins.starship]
-inline = 'eval "$(starship init zsh)"'
-
-# ---- 6. 补全初始化 ----
+# compinit：放在补全 fpath 设置之后、widget 类插件之前
 [plugins.compinit]
 inline = """
 autoload -Uz compinit
-compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+compinit -C -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 """
+
+[plugins.zoxide]
+# 存在性守卫：zoxide 未安装时静默跳过
+inline = 'command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"'
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["source"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+# 必须在所有 Widget 注册之后加载，否则无法捕获其他插件对光标行为的修改
+apply = ["source"]
+
+# 提示符主题（通过 sheldon 统一管理，静态缓存加速启动）
+[plugins.starship]
+inline = 'eval "$(starship init zsh)"'

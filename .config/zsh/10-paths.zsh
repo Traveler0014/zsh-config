@@ -1,6 +1,7 @@
 # ------------------------------------------------------------
 # 10-paths.zsh —— PATH 管理
-# 全部为存在性探测：目录不存在则跳过，可安全迁移到新机器
+# 策略：逐项存在性探测，目录不存在则跳过
+#       （避免 PATH 出现死路径；缺失工具在新环境自动忽略，无需改动）
 # 列表顺序 = 优先级顺序（越靠前优先级越高）
 # ------------------------------------------------------------
 
@@ -8,9 +9,11 @@ typeset -U path    # 去重，保证重复 source 幂等
 
 typeset -a _zsh_paths=(
   "$HOME/.local/bin"              # pipx / uv / 本地脚本
+  "$HOME/tool"                    # 自用脚本目录
   "$HOME/.local/share/fnm"        # fnm（官方安装脚本的二进制位置）
   "$HOME/.cargo/bin"              # Rust 工具链
   "$HOME/.bun/bin"                # Bun
+  "/usr/local/go/bin"             # Go 系统安装目录
   "$HOME/.local/go/bin"           # 本地 Go
   "$HOME/go/bin"                  # Go 全局二进制
   "$HOME/.local/share/pnpm/bin"   # pnpm
@@ -26,5 +29,5 @@ if [[ -d "$HOME/.local/share/pnpm" ]]; then
   export PNPM_HOME="$HOME/.local/share/pnpm"
 fi
 
-# 某些安装脚本会生成 ~/.local/bin/env 兜底文件（若存在则加载）
+# 兜底：某些安装脚本会生成 ~/.local/bin/env（若存在则加载）
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
