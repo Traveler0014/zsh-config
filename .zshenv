@@ -8,4 +8,4 @@
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
 # 用户级可执行目录（pipx / uv / 本地脚本）
-export PATH="/home/novart/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
